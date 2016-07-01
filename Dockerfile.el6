@@ -1,7 +1,8 @@
-# docker build -t el6dev -f Dockerfile.el6 .
-# docker run -t -i -v $PWD:/vagrant el6dev /vagrant/build.sh
+# docker build -t reducible/centosdev:6 -f Dockerfile.el6 .
+# docker run -t -i -v $PWD:/vagrant centosdev:6 /vagrant/build.sh
 FROM centos:6
 
 RUN yum clean all
+RUN yum -y upgrade
 RUN yum -y groupinstall "Development tools"  
 RUN yum -y install openssl-devel pcre-devel zlib-devel readline-devel libtermcap-devel wget curl
