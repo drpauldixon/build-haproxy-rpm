@@ -1,6 +1,6 @@
 # Build an HAProxy RPM with Lua support
 
-This is a bit of a hatchet job... I needed HAProxy built with Lua support and package it up as an RPM. And I needed a version that runs on EL 5 variants (CentOS 5, RedHat 5). And I needed to build new packages when new versions of HAProxy are released.
+This is a bit of a hatchet job... I needed HAProxy built with Lua support and packaged up as an RPM. And I needed a version that runs on EL5 variants (CentOS 5, RedHat 5). And I needed to build new packages when new versions of HAProxy are released.
 
 This currently supports EL5 and EL6.
 
