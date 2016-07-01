@@ -1,5 +1,4 @@
 # docker build -t reducible/centosdev:5 -f Dockerfile.el5 .
-# docker run -t -i -v $PWD:/vagrant centosdev:5 /vagrant/build.sh
 FROM centos:5
 
 RUN yum clean all
