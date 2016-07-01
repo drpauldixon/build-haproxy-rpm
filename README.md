@@ -8,17 +8,18 @@ To get going...
 
 ## Using Docker
 
-**Build HAproxy RPM for EL6 variants:**
+**Build an HAProxy RPM for EL6 variants:**
 
-This will place an RPM file in rpms/el6
+This will place an RPM file in `rpms/el6`
 
 ```
 docker run -t -i -v $PWD:/vagrant reducible/centosdev:6 /vagrant/build.sh
 ```
 
-**Build HAproxy RPM for EL5 variants:**
+**Build an HAProxy RPM for EL5 variants:**
 
-This will place an RPM file in rpms/el5
+This will place an RPM file in `rpms/el5`
+
 ```
 docker run -t -i -v $PWD:/vagrant reducible/centosdev:5 /vagrant/build.sh
 ```
@@ -26,7 +27,7 @@ docker run -t -i -v $PWD:/vagrant reducible/centosdev:5 /vagrant/build.sh
 
 ## Using Vagrant
 
-**Build HAproxy RPM for EL6 variants:**
+**Build an HAProxy RPM for EL6 variants:**
 
 ```
 ./mkvagrantfile.sh 6
@@ -35,9 +36,9 @@ vagrant ssh
 /vagrant/build.sh
 ```
 
-This will place an RPM file in rpms/el6
+This will place an RPM file in `rpms/el6`
 
-**Build HAproxy RPM for EL5 variants:**
+**Build an HAProxy RPM for EL5 variants:**
 
 ```
 ./mkvagrantfile.sh 5
@@ -46,7 +47,7 @@ vagrant ssh
 /vagrant/build.sh
 ```
 
-This will place an RPM file in rpms/el5
+This will place an RPM file in `rpms/el5`
 
 ## Versions
 
@@ -54,7 +55,9 @@ HAProxy and Lua versions can be configured before running `/vagrant/build.sh` us
 
 **Via docker:**
 
+```
 docker run -t -i -e HAPROXY_VERSION='1.6.5' -e LUA_VERSION='5.3.2' -v $PWD:/vagrant centosdev:6 /vagrant/build.sh
+```
 
 **Via vagrant:**
 
@@ -66,4 +69,4 @@ export LUA_VERSION=5.3.2
 
 ## TODO
 
-EL7 + systemd
+EL7 + systemd + vagrant tidy up.
