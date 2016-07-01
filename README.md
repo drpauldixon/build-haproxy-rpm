@@ -13,14 +13,14 @@ To get going...
 This will place an RPM file in rpms/el6
 
 ```
-docker run -t -i -v $PWD:/vagrant centosdev:5 /vagrant/build.sh
+docker run -t -i -v $PWD:/vagrant reducible/centosdev:6 /vagrant/build.sh
 ```
 
 **Build HAproxy RPM for EL5 variants:**
 
 This will place an RPM file in rpms/el5
 ```
-docker run -t -i -v $PWD:/vagrant centosdev:6 /vagrant/build.sh
+docker run -t -i -v $PWD:/vagrant reducible/centosdev:5 /vagrant/build.sh
 ```
 
 
