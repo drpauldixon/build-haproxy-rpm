@@ -26,11 +26,11 @@ LUA_VERSION="${LUA_VERSION:-5.3.3}"
 RVM_VERSION="${RVM_VERSION:-2.2.1}"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-REDHAT_VERSION=$(awk '{print substr ($3, 0, 1)}' /etc/redhat-release)
+REDHAT_VERSION=$(sed -e "s/Linux//" /etc/redhat-release | awk '{print substr ($3, 0, 1)}')
 
 # Install development tools and libraries
 $SUDO yum -y groupinstall "Development tools"  
-$SUDO yum -y install openssl-devel pcre-devel zlib-devel readline-devel libtermcap-devel wget curl
+$SUDO yum -y install openssl-devel pcre-devel zlib-devel readline-devel libtermcap-devel wget curl which
 
 # Install fpm (this is used to build the RPM)
 if [ ! -f $RVM_SCRIPT ]
@@ -116,17 +116,32 @@ else
   make TARGET=linux26 USE_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1 USE_DL=1 USE_LUA=1 LUA_LIB=$LUA_ROOT/lib LUA_INC=$LUA_ROOT/include LUA_LIB_NAME=lua
 fi
 
-mkdir -p $INSTALL_ROOT/haproxy/etc/rc.d/init.d  
-mkdir -p $INSTALL_ROOT/haproxy/etc/haproxy  
-mkdir -p $INSTALL_ROOT/haproxy/var/lib/haproxy  
-chmod 700 $INSTALL_ROOT/haproxy/var/lib/haproxy  
+if [ $REDHAT_VERSION -lt 7 ]
+then
+  # Use system v init scripts
+  mkdir -p $INSTALL_ROOT/haproxy/etc/rc.d/init.d  
+else
+  # Use systemd
+  mkdir -p $INSTALL_ROOT/haproxy/usr/lib/systemd/system
+fi
+
+mkdir -p $INSTALL_ROOT/haproxy/etc/haproxy
+mkdir -p $INSTALL_ROOT/haproxy/var/lib/haproxy
+mkdir -p $INSTALL_ROOT/haproxy/etc/sysconfig
+touch $INSTALL_ROOT/haproxy/etc/sysconfig/haproxy
+chmod 700 $INSTALL_ROOT/haproxy/var/lib/haproxy
+chown 644 $INSTALL_ROOT/haproxy/etc/sysconfig/haproxy
+
 make install DESTDIR=$INSTALL_ROOT/haproxy PREFIX=/usr DOCDIR=/usr/share/doc/haproxy
 
-# Create system v init script for EL versions < 7
+# Create system v init script for EL versions < 7 and systemd service for EL >=7
 if [ $REDHAT_VERSION -lt 7 ]
 then
   cp $SCRIPT_DIR/haproxy.sysv $INSTALL_ROOT/haproxy/etc/rc.d/init.d/haproxy
   chmod 755 $INSTALL_ROOT/haproxy/etc/rc.d/init.d/haproxy
+else
+  cp $SCRIPT_DIR/haproxy.service $INSTALL_ROOT/haproxy/usr/lib/systemd/system
+  cp haproxy-systemd-wrapper $INSTALL_ROOT/haproxy/usr/sbin
 fi
 
 builtin cd $WORKSPACE
