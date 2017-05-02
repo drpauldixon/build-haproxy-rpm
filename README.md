@@ -8,12 +8,18 @@ To get going...
 
 ## Using Docker
 
-**Build an HAProxy RPM for EL6 variants:**
+**Build an HAProxy RPM for EL7 variants:**
+
+This will place an RPM file in `rpms/el7`
+
+```
+docker run -t -i -v $PWD:/vagrant centos:7 /vagrant/build.sh
+```
 
 This will place an RPM file in `rpms/el6`
 
 ```
-docker run -t -i -v $PWD:/vagrant reducible/centosdev:6 /vagrant/build.sh
+docker run -t -i -v $PWD:/vagrant centos:6 /vagrant/build.sh
 ```
 
 **Build an HAProxy RPM for EL5 variants:**
@@ -67,6 +73,3 @@ export LUA_VERSION=5.3.2
 /vagrant/build.sh
 ```
 
-## TODO
-
-EL7 + systemd + vagrant tidy up.
