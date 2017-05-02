@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 # If running as root (e.g. under Docker)
 if [[ $EUID -eq 0 ]]
@@ -37,10 +37,12 @@ if [ ! -f $RVM_SCRIPT ]
 then
   if [ $REDHAT_VERSION -gt 5 ]
   then
-    gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+    #gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   else
     $SUDO yum -y install gpg
-    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+    #gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   fi
 
   \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
